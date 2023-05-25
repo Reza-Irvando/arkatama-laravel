@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,18 +19,22 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/index', [UserController::class, 'index']);
+Route::get('/', [LandingController::class, 'index']);
 
 Route::get('/login', [UserController::class, 'login']);
 
 Route::get('/create', [UserController::class, 'create']);
 
-Route::get('/listUser', [UserController::class, 'listUser']);
+Route::get('/user', [UserController::class, 'index']);
+
+Route::get('/role', [RoleController::class, 'index']);
 
 Route::get('/detailUser', [UserController::class, 'detailUser']);
 
 Route::get('/updateUser', [UserController::class, 'updateUser']);
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
+
+Route::get('/category', [CategoryController::class, 'index']);
+
+Route::get('/product', [ProductController::class, 'index']);

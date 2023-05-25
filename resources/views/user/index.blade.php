@@ -1,20 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tugas 19</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-</head>
-<body>
-    <h1>Tugas 19 PHP 4</h1>
-    <h2>Menu Utama</h2>
-        <button><a href="listUser">List User</a></button>
-        <button><a href="create">Create User</a></button>
-        <button><a href="login">Login</a></button>
-        <button><a href="logout">Log Out</a></button>
-        
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-</body>
-</html>
+@extends('layouts.main')
+
+@section('content')
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">User</h1>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    DataTable Example
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Avatar</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                                <tr>
+                                    <th>{{ $user['id'] }}</th>
+                                    <td><img src="https://placehold.co/50x50" alt=""></td>
+                                    <td>{{ $user['name'] }}</td>
+                                    <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['phone'] }}</td>
+                                    <td>{{ $user['role'] }}</td>
+                                    <td>
+                                        <div class='btn-group' role='group' aria-label='Basic mixed styles example'>
+                                            <button type='button' class='btn btn-secondary'><a href="">Detail</a></button>
+                                            <button type='button' class='btn btn-warning'><a href="">Update</a></button>
+                                            <button type='button' class='btn btn-danger'><a href="">Delete</a></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+@endsection
