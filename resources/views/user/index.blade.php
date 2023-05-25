@@ -25,7 +25,7 @@
                         <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <th>{{ $user['id'] }}</th>
+                                    <th>{{ $loop->iteration }}</th>
                                     <td><img src="https://placehold.co/50x50" alt=""></td>
                                     <td>{{ $user['name'] }}</td>
                                     <td>{{ $user['email'] }}</td>

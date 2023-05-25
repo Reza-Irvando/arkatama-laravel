@@ -20,7 +20,7 @@
                         <tbody>
                             @foreach($categories as $category)
                                 <tr>
-                                    <th>{{ $category['id'] }}</th>
+                                    <th>{{ $loop->iteration }}</th>
                                     <td>{{ $category['name'] }}</td>
                                 </tr>
                             @endforeach

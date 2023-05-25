@@ -25,7 +25,7 @@
                         <tbody>
                             @foreach($products as $product)
                                 <tr>
-                                    <th>{{ $product['id'] }}</th>
+                                    <th>{{ $loop->iteration }}</th>
                                     <td>{{ $product['category'] }}</td>
                                     <td>{{ $product['name'] }}</td>
                                     <td>Rp.{{ number_format($product['price'], 0) }}</td>
