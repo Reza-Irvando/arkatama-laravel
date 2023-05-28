@@ -2,114 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = [
-            [
-                "id" => "1",
-                "avatar" => "avatar",
-                "name" => "Admin 1",
-                "email" => "admin1@mail.com",
-                "phone" => "081111111111",
-                "role" => "Admin"
-            ],
-            [
-                "id" => "2",
-                "avatar" => "avatar",
-                "name" => "Admin 2",
-                "email" => "admin2@mail.com",
-                "phone" => "082222222222",
-                "role" => "Admin"
-            ],
-            [
-                "id" => "3",
-                "avatar" => "avatar",
-                "name" => "Admin 3",
-                "email" => "admin3@mail.com",
-                "phone" => "083333333333",
-                "role" => "Admin"
-            ],
-            [
-                "id" => "4",
-                "avatar" => "avatar",
-                "name" => "Staff 1",
-                "email" => "staff1@mail.com",
-                "phone" => "084444444444",
-                "role" => "Staff"
-            ],
-            [
-                "id" => "5",
-                "avatar" => "avatar",
-                "name" => "Staff 2",
-                "email" => "staff2@mail.com",
-                "phone" => "085555555555",
-                "role" => "Staff"
-            ],
-            [
-                "id" => "6",
-                "avatar" => "avatar",
-                "name" => "Staff 3",
-                "email" => "staff3@mail.com",
-                "phone" => "08666666666",
-                "role" => "Staff"
-            ],
-            [
-                "id" => "7",
-                "avatar" => "avatar",
-                "name" => "Customer 1",
-                "email" => "customer1@mail.com",
-                "phone" => "087777777777",
-                "role" => "Customer"
-            ],
-            [
-                "id" => "8",
-                "avatar" => "avatar",
-                "name" => "Customer 2",
-                "email" => "customer2@mail.com",
-                "phone" => "088888888888",
-                "role" => "Customer"
-            ],
-            [
-                "id" => "9",
-                "avatar" => "avatar",
-                "name" => "Customer 3",
-                "email" => "customer3@mail.com",
-                "phone" => "089999999999",
-                "role" => "Customer"
-            ],
-            [
-                "id" => "10",
-                "avatar" => "avatar",
-                "name" => "Customer 4",
-                "email" => "customer4@mail.com",
-                "phone" => "081234567890",
-                "role" => "Customer"
-            ]
-            ];
-        return view("user.index", ['users' => $users]);
+        // Ambil semua data user dari database
+        $users = User::with('role')->get();
+        
+        // Tampilkan halaman index
+        return view('user.index', compact('users'));
     }
 
-    public function login(){
-        return view("user.login");
+    public function create()
+    {
+        // Ambil data roles dari database
+        $roles = Role::all();
+        
+        // Tampilkan form create user dengan passing data roles
+        return view('user.create', compact('roles'));
     }
 
-    public function create(){
-        return view("user.create");
+    public function store(Request $request)
+    {
+        // Simpan data ke database
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'role_id' => $request->role,
+            'password' => bcrypt('password') // default password, sementara di hardcode
+        ]);
+
+        // Redirect ke halaman user.index
+        return redirect()->route('user.index');
     }
     
-    public function listUser(){
-        return view("user.listUser");
+    public function edit($id)
+    {
+        // Ambil data user berdasarkan id
+        $user = User::find($id);
+        
+        // Ambil data roles dari database
+        $roles = Role::all();
+        
+        // Tampilkan halaman edit dengan passing data user dan roles
+        return view('user.edit', compact('user', 'roles'));
     }
     
-    public function detailUser(){
-        return view("user.detailUser");
+    public function update(Request $request, $id)
+    {
+        // Ambil data user berdasarkan id
+        $user = User::find($id);
+        
+        // Update data user
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone
+        ]);
+        
+        // Redirect ke halaman user.index
+        return redirect()->route('user.index');
     }
-
-    public function updateUser(){
-        return view("user.updateUser");
+    
+    public function destroy($id)
+    {
+        // Ambil data user berdasarkan id
+        $user = User::find($id);
+        
+        // Hapus data user
+        $user->delete();
+        
+        // Redirect ke halaman user.index
+        return redirect()->route('user.index');
     }
 }

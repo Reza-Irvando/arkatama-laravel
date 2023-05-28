@@ -2,33 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(){
-        $categories = [
-            [
-                "id" => "29c3a6be-c042-4efd-a199-7d45b99fdcc2",
-                "name" => "Cellphone",
-            ],
-            [
-                "id" => "105aea64-0b01-4883-b536-9889f06498d7",
-                "name" => "Tablet"
-            ],
-            [
-                "id" => "bb2d6c9e-4a86-485c-bde6-2a83c2b30dd5",
-                "name" => "Wearable"
-            ],
-            [
-                "id" => "c2209c46-99b1-4cf5-a1cb-243c4d6ff3bb",
-                "name" => "Laptop"
-            ],
-            [
-                "id" => "8fc7a400-d1e4-4fa1-926a-2ecfdc3266d4",
-                "name" => "Accessories"
-            ]
-        ];
-        return view("category.index", ['categories' => $categories]);
+    public function index()
+    {
+
+        $categories = Category::all();
+
+        return view('category.index', compact('categories'));
+    }
+
+    public function create()
+    {
+        return view('category.create');
+    }
+
+    public function store(Request $request)
+    {
+        // masukkan data ke database
+        $category = Category::create([
+            'name' => $request->name
+        ]);
+
+        // redirect ke halaman category.index
+        return redirect()->route('category.index');
+    }
+
+    public function edit($id)
+    {
+        // ambil data category berdasarkan id
+        $category = Category::find($id);
+
+        // tampilkan view edit dan passing data category
+        return view('category.edit', compact('category'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // ambil data category berdasarkan id
+        $category = Category::find($id);
+
+        // update data category
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        // redirect ke halaman category.index
+        return redirect()->route('category.index');
+    }
+
+    public function destroy($id)
+    {
+        // ambil data category berdasarkan id
+        $category = Category::find($id);
+
+        // hapus data category
+        $category->delete();
+
+        // redirect ke halaman category.index
+        return redirect()->route('category.index');
     }
 }
