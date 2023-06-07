@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -28,6 +29,18 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'role_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        
         // Simpan data ke database
         $user = User::create([
             'name' => $request->name,
@@ -55,14 +68,11 @@ class UserController extends Controller
     
     public function update(Request $request, $id)
     {
-        // Ambil data user berdasarkan id
-        $user = User::find($id);
-        
-        // Update data user
-        $user->update([
+        User::where('id', $id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone
+            'phone' => $request->phone,
+            'role_id' => $request->role
         ]);
         
         // Redirect ke halaman user.index
