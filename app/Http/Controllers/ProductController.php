@@ -58,7 +58,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
-            'brands' => $request->brand,
+            'brand' => $request->brand,
             'image' => $imageName,
         ]);
 
@@ -100,7 +100,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
-                'brands' => $request->brand,
+                'brand' => $request->brand,
                 'image' => $imageName,
             ]);
 
@@ -111,7 +111,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
-                'brands' => $request->brand,
+                'brand' => $request->brand,
             ]);
         }
 

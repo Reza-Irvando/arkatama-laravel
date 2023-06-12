@@ -14,7 +14,7 @@ class Product extends Model
         'name',
         'price',
         'sale_price',
-        'brands',
+        'brand',
         'rating',
         'image'
     ];

@@ -43,7 +43,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'category' => 'required',
+            'category_id' => 'required',
             'name' => 'required|string|min:3',
             'price' => 'required|integer',
             'sale_price' => 'required|integer',
@@ -65,11 +65,11 @@ class ProductController extends Controller
         // Storage::putFileAs('public/product', $request->image, $imageName);
 
         $product = Product::create([
-            'category_id' => $request->category,
+            'category_id' => $request->category_id,
             'name' => $request->name,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
-            'brands' => $request->brand,
+            'brand' => $request->brand,
             // 'image' => $imageName,
         ]);
 
@@ -84,7 +84,7 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'name' => 'required|string|min:3',
             'price' => 'required|integer',
             'sale_price' => 'required|integer',
@@ -103,11 +103,11 @@ class ProductController extends Controller
 
         if ($product) {
             $product = $product->update([
-                'category_id' => $request->category,
+                'category_id' => $request->category_id,
                 'name' => $request->name,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
-                'brands' => $request->brand,
+                'brand' => $request->brand,
             ]);
 
             return response()->json([
