@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("name");
             $table->bigInteger("price")->default(0);
             $table->bigInteger("sale_price")->default(0);
-            $table->string("brands")->nullable();
+            $table->string("brand")->nullable();
             $table->integer("rating")->default(0);
             $table->timestamps();
         });
